@@ -1,53 +1,131 @@
 @model ICollection<Emprestimo>
 @{
     ViewData["Title"] = "Listagem de Empréstimos";
+    string Classe = "";
+
+    // Recebe os valores definidos no ViewData
+    // Gets values defined at EmprestimooController ViewData
+    int filtroPorPagina = Int32.Parse(ViewData["itensPorPagina"].ToString());
+    int paginaAtual = Int32.Parse(ViewData["paginaAtual"].ToString());
+
+    // Se filtro por pagina (livros por pagina) for maior que o numero de livros, entao numero de livros por pagina recebe filtro por pagina (livros por pagina)
+    // if books per page is excedes books quantity, so books per page gets a filter
+    int numLivrosPorPagina = (Model.Count < filtroPorPagina ? Model.Count : filtroPorPagina);
+
+    int numTotalPaginas = 0;
+    // Se o numero de livros por paginas for maior que zero
+    // if book quantity per page > zero
+    if (numLivrosPorPagina > 0)
+    {
+    
+        numTotalPaginas = (Model.Count / numLivrosPorPagina + (Model.Count % numLivrosPorPagina == 0 ? 0 : 1));
+    }
 }
 
 <div class="row">
     <div class="col-md-12">
-    <form class="form-inline" method="POST">
-        <div class="form-group mb-2">
-            <select name="TipoFiltro" class="form-control">
-                <option value="Usuario">Usuário</option>
-                <option value="Livro">Livro</option>
-            </select>
-        </div>
-        <div class="form-group mb-2 mx-sm-3">
-            <input type="text" placeholder="Filtro" name="Filtro" class="form-control" />
-        </div>
-        <button type="submit" class="btn btn-primary mb-2">Pesquisar</button>
-    </form>
+        <form class="form-inline" method="POST">
+            <div class="form-group mb-2">
+                <select name="TipoFiltro" class="form-control">
+                    <option value="Usuario">Usuário</option>
+                    <option value="Livro">Livro</option>
+                </select>
+            </div>
+
+            <!-- Campo onde digitar o que buscar-->
+            <div class="form-group mb-2 mx-sm-3">
+                <input type="text" placeholder="Filtro" name="Filtro" class="form-control" />
+            </div>
+
+            <!-- Controle de paginação (Quantos livros exibidos por pagina)-->
+            <div class="form-group mb-2" style="margin-left: 15px;">
+                <select name="itensPorPagina" id="itensPorPagina" class="form-control">
+                    <option value="10">10 Livros</option>
+                    <option value="15">15 Livros</option>
+                    <option value="20">20 Livros</option>
+                    <option value="50">50 Livros</option>
+                </select>
+            </div>
+
+            <!-- Botão pesquisar-->
+            <button type="submit" class="btn btn-primary mb-2" style="margin-left: 25px;">Pesquisar</button>
+
+            <!-- Seletor de página-->
+            <div id="seletorPaginas" class="form-group mb-2" style="margin-left: 25px;">
+                <span>Página: </span>
+
+                <!-- Loop for (enquanto i menor que total de paginas)-->
+                @for (int i = 1; i <= numTotalPaginas; i++)
+                {
+                    <!-- Se o contador for maior que 1 -->
+                    @if (i > 1)
+                    {
+                        <!-- Adiciona uma vírgula -->
+                        <span>,</span>
+                    }
+                    <!-- Adiciona um link para a página -->
+                    <span style="margin-left: 5px;"><a href="/Emprestimo/Listagem?paginaAtual=@i">@i</a></span>
+                }
+            </div>
+        </form>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-12">
-        <table > 
-            <thead>
-                <tr><th>Id</th>
-                <th>Usuario</th>
-                <th>Data Empréstimo</th>
-                <th>Data Devolução</th>
-                <th>Livro</th>
-                <th>Autor</th>
-                <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach(Emprestimo e in Model)
-                {
-                <tr>
-                    <td>@e.Id</td>
-                    <td>@e.NomeUsuario</td>
-                    <td>@e.DataEmprestimo.ToString("dd/MM/yyyy")</td>
-                    <td>@e.DataDevolucao.ToString("dd/MM/yyyy")</td>
-                    <td>@e.Livro.Titulo</td>
-                    <td>@e.Livro.Autor</td>
-                    <td><a href="/Emprestimo/Edicao/@e.Id">Editar</a></td>
-                </tr>
-                }
-            </tbody>
-        </table>
+        @if (Model.Count != 0)
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Usuario</th>
+                        <th>Data Empréstimo</th>
+                        <th>Data Devolução</th>
+                        <th>Livro</th>
+                        <th>Autor</th>
+                        <th>Devolvido</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var e in Model.Skip((paginaAtual - 1) * numLivrosPorPagina).Take(numLivrosPorPagina))
+                    {
+                       @if (e.Devolvido || e.DataDevolucao >= System.DateTime.Now)
+            {
+            // Se o livro foi devolvido ou a data de devolução é maior ou igual à data atual
+            // if book is returned or return date is bigger or equal to actual datetime
+         Classe = "";
+            }
+            else
+            {
+    // Se o livro não foi devolvido e a data de devolução é menor que a data atual
+    // if book isn't returned and return date < actual datetime
+           Classe = "text-danger";
+            }
+
+                        <tr class="@Classe">
+                            <td>@e.Id</td>
+                            <td>@e.NomeUsuario</td>
+                            <td>@e.DataEmprestimo.ToString("dd/MM/yyyy")</td>
+                            <td>@e.DataDevolucao.ToString("dd/MM/yyyy")</td>
+                            <td>@e.Livro?.Titulo</td>
+                            <td>@e.Livro?.Autor</td>
+                            <!-- Se o livro foi devolvido-->
+                            <!--if book is returned bool -->
+                            <td>@(e.Devolvido ? "Sim" : "Não")</td>
+                            <td><a href="/Emprestimo/Edicao/@e.Id">Editar</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            // no registration found //
+            <h3 class="text-center">Nenhum registro encontrado</h3>
+        }
+
+    
     </div>
 </div>
-

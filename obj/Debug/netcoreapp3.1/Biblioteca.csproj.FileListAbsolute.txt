@@ -36,10 +36,15 @@ C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Raz
 C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Livro\Cadastro.cshtml.g.cs
 C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Livro\Edicao.cshtml.g.cs
 C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Livro\Listagem.cshtml.g.cs
-C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Livro\_FormCadastro.cshtml.g.cs
 C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_CookieConsentPartial.cshtml.g.cs
 C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
 C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\CadastrarUsuario.cshtml.g.cs
+C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\CadastroRealizado.cshtml.g.cs
+C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\EditarUsuario.cshtml.g.cs
+C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\ExcluirUsuario.cshtml.g.cs
+C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\ListaUsuarios.cshtml.g.cs
+C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\NeedAdmin.cshtml.g.cs
 C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
 C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
 C:\Users\anaca\OneDrive\Área de Trabalho\Biblioteca\obj\Debug\netcoreapp3.1\Biblioteca.RazorTargetAssemblyInfo.cache

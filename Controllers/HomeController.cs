@@ -20,8 +20,8 @@ namespace Biblioteca.Controllers
         }
 
         public IActionResult Index()
-        {
-            Autenticacao.CheckLogin(this);
+        {   
+            Autenticacao.verificaLogin(this);
             return View();
         }
 
@@ -30,18 +30,30 @@ namespace Biblioteca.Controllers
             return View();
         }
 
+        //Função de quando envia o formulario de login
+        //Function that sends the login form
         [HttpPost]
         public IActionResult Login(string login, string senha)
         {
-            if(login != "admin" || senha != "123")
+            //Se o login e senha estiverem corretos
+            //If the login and password are correct
+            if(Autenticacao.verificaLoginSenha(login, senha, this))
             {
-                ViewData["Erro"] = "Senha inválida";
-                return View();
+                //Salva as informações nos cookies
+                //Saves the data in cookies
+                HttpContext.Session.SetString("Login", login);
+                
+                //Redireciona para a página inicial
+                //Redirects to the initial page
+                return RedirectToAction("Index");
             }
             else
             {
-                HttpContext.Session.SetString("user", "admin");
-                return RedirectToAction("Index");
+                //Exibe a mensagem de erro
+                //Displays the error message
+                ViewData["Erro"] = "Login ou Senha inválidos";
+
+                return View();               
             }
         }
 

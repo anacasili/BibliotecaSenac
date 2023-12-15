@@ -6,5 +6,7 @@ namespace Biblioteca.Models
     {
         public ICollection<Livro> Livros { get; set; }
         public Emprestimo Emprestimo { get; set; }
+        public LivroService LivroService { get; set; }
+        public EmprestimoService emprestimoService { get; set; }
     }
 }
